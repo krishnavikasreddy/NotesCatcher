@@ -1,4 +1,4 @@
-import { Note } from './Note';
+import Note from './Note';
 
 export default class NotesContainer {
   constructor() {
@@ -16,12 +16,25 @@ export default class NotesContainer {
     const { anchorNode,
             focusNode } = selection;
     let currentNode = anchorNode;
-    const selectedNodes = [anchorNode];
-    while (currentNode !== focusNode) {
-      console.log(currentNode);
-      currentNode = currentNode.nextSibling;
-      selectedNodes.push(currentNode);
+    let endNode = focusNode;
+    if (NotesContainer.isSelectionBackward(selection)) {
+      currentNode = focusNode;
+      endNode = anchorNode;
     }
+    const selectedNodes = [];
+    while (currentNode !== endNode) {
+      if (currentNode.nodeType === 3 && currentNode.nodeValue.trim() !== '') {
+        selectedNodes.push(currentNode);
+      }
+      if (currentNode.firstChild) {
+        currentNode = currentNode.firstChild;
+      } else if (currentNode.nextSibling) {
+        currentNode = currentNode.nextSibling;
+      } else {
+        currentNode = currentNode.parentElement.nextSibling;
+      }
+    }
+    selectedNodes.push(endNode);
     return selectedNodes;
   }
 
@@ -30,27 +43,56 @@ export default class NotesContainer {
             focusNode,
             anchorOffset,
             focusOffset } = selection;
+    const note = new Note();
+    const isSelectionBackward = NotesContainer.isSelectionBackward(selection);
     selectedNodes.forEach((node) => {
       const range = document.createRange();
       if (node === anchorNode && node === focusNode) {
-        range.setStart(anchorOffset);
-        range.setEnd(focusOffset);
+        if (isSelectionBackward) {
+          range.setStart(node, focusOffset);
+          range.setEnd(node, anchorOffset);
+        } else {
+          range.setStart(node, anchorOffset);
+          range.setEnd(node, focusOffset);
+        }
       } else if (node === anchorNode) {
-        range.setStart(anchorOffset);
-        range.setEnd(node.length);
+        if (isSelectionBackward) {
+          range.setStart(node, 1);
+          range.setEnd(node, anchorOffset);
+        } else {
+          range.setStart(node, anchorOffset);
+          range.setEnd(node, node.length);
+        }
       } else if (node === focusNode) {
-        range.setStart(1);
-        range.setEnd(focusOffset);
+        if (isSelectionBackward) {
+          range.setStart(node, focusOffset);
+          range.setEnd(node, node.length);
+        } else {
+          range.setStart(node, 1);
+          range.setEnd(node, focusOffset);
+        }
       } else {
-        range.setStart(1);
-        range.setEnd(node.length);
+        range.setStart(node, 1);
+        range.setEnd(node, node.length);
       }
-      this.Notes.push(new Note(range));
+      note.addRange(range);
     });
+    note.colorRanges();
+    this.Notes.push(note);
   }
 
-  static onTextSelectEnd(selection) {
-    this.assignRangesToSelectedNodes(this.extractAllSelectedNodes(selection), selection);
-    console.log(this.Notes);
+  onTextSelectEnd(selection) {
+    this.assignRangesToSelectedNodes(
+      this.constructor.extractAllSelectedNodes(selection), selection);
+  }
+  static isSelectionBackward(selection) {
+    const comparedPosition = selection.anchorNode
+          .compareDocumentPosition(selection.focusNode);
+    if (comparedPosition === 2) {
+      return true;
+    } else if (comparedPosition === 0) {
+      return selection.anchorOffset > selection.focusOffset;
+    }
+    return false;
   }
 }
