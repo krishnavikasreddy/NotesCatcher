@@ -1,0 +1,20 @@
+#+HTML_HEAD: <link rel='stylesheet' type='text/css' href='/home/krishna/Documents/bootstrap.css' />
+#+HTML_HEAD_EXTRA: <style>body{width:800px;margin:auto!important;line-height:1.5em;} </style>
+
+#+MACRO: r @@html:<span class='text-danger'>@@$1@@html:</span>@@
+#+MACRO: g @@html:<span class='text-success'>@@$1@@html:</span>@@
+#+MACRO: y @@html:<span class='text-warning'>@@$1@@html:</span>@@
+
+
+* CATCHMYNOTES
+** DONE Selection Using Mouse
+** TODO check If the selection has any previous selection
+  DEADLINE: <2017-03-20 Mon>
+** TODO Copy to clipboard
+  DEADLINE: <2017-03-21 Tue>
+** TODO React-Redux based App development
+  DEADLINE: <2017-03-22 Mon>
+** TODO devise the side Component 
+  DEADLINE: <2017-03-27 Mon>
+** TODO Add the drag and drop feature to the component
+  DEADLINE: <2017-03-29 Wed>

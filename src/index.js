@@ -9,7 +9,7 @@ const onTextSelect = (event) => {
   if (selection.toString().length > MIN_SELCTION_SIZE) {
     notesContainer.onTextSelectEnd(selection);
   }
-  selection.empty();
+  window.getSelection().empty();
 };
 
 

@@ -8,7 +8,31 @@ export default class NotesContainer {
   static onTextSelectStart() {
     // Should Some thing come up
   }
-
+  doesSelectionCollides(selection) {
+    const givenRange = selection.getRangeAt(0);
+    const collision = (note) => {
+      const noteRange = note.getRange();
+      const startToStart = givenRange.compareBoundaryPoints(
+        Range.START_TO_START, noteRange);
+      const endToEnd = givenRange.compareBoundaryPoints(
+        Range.END_TO_END, noteRange);
+      const startToEnd = givenRange.compareBoundaryPoints(
+        Range.START_TO_END, noteRange);
+      const endToStart = givenRange.compareBoundaryPoints(
+        Range.END_TO_START, noteRange);
+      // Array.some evaluates for truthy condition
+      // In this case we need to know if any one of them is failing
+      // so reverse the boolean
+      return !(startToStart === startToEnd
+              && endToStart === endToEnd
+              && startToStart === endToStart
+                  && startToEnd === endToEnd);
+    };
+    if (this.Notes.length > 0) {
+      return !this.Notes.some(collision);
+    }
+    return true;
+  }
   // Start from the anchorNode
   // Recurse till the focusNode
   // While identifying all the textNodes in the process
@@ -37,13 +61,12 @@ export default class NotesContainer {
     selectedNodes.push(endNode);
     return selectedNodes;
   }
-
   assignRangesToSelectedNodes(selectedNodes, selection) {
     const { anchorNode,
             focusNode,
             anchorOffset,
             focusOffset } = selection;
-    const note = new Note();
+    const note = new Note(selection);
     const isSelectionBackward = NotesContainer.isSelectionBackward(selection);
     selectedNodes.forEach((node) => {
       const range = document.createRange();
@@ -80,10 +103,11 @@ export default class NotesContainer {
     note.colorRanges();
     this.Notes.push(note);
   }
-
   onTextSelectEnd(selection) {
-    this.assignRangesToSelectedNodes(
+    if (this.doesSelectionCollides(selection)) {
+      this.assignRangesToSelectedNodes(
       this.constructor.extractAllSelectedNodes(selection), selection);
+    }
   }
   static isSelectionBackward(selection) {
     const comparedPosition = selection.anchorNode
