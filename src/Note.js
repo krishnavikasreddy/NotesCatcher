@@ -1,22 +1,27 @@
 // Note - each note in a webpage
 import defaultNoteStyle from './configs/notes';
+import * as DOM from './utils/DOMUtils';
 
 class Note {
-  constructor() {
+  constructor(follower, selection) {
+    this.rangeAttributes = Note.saveRangeAttributes(selection);
     this.textRanges = [];
     this.style = defaultNoteStyle;
-    // this.spanElement.setAttribute('style', textGreen.toString());
+    this.follower = follower;
   }
   static saveRangeAttributes(selection) {
     const { anchorNode,
             focusNode,
             anchorOffset,
             focusOffset } = selection;
+    const clientRect = selection.getRangeAt(0).getBoundingClientRect();
     return {
       anchorNode,
       focusNode,
       anchorOffset,
-      focusOffset };
+      focusOffset,
+      clientRect,
+    };
   }
   getRange() {
     if (this.textRanges.length === 0) {
@@ -31,8 +36,9 @@ class Note {
                  this.textRanges[this.textRanges.length - 1].endOffset);
     return range;
   }
-  changeStyle(style) {
-    this.style = style;
+  static changeStyle(element, style) {
+    // TODO : Test this in IE, for I doubt if polyfill supports this
+    Object.assign(element.style, style);
   }
   addRange(noteRange) {
     this.textRanges.push(noteRange);
@@ -42,15 +48,22 @@ class Note {
   }
   colorRanges() {
     this.textRanges.forEach((range) => {
-      range.surroundContents(Note.getColoringDOMElement());
+      range.surroundContents(this.getColoringDOMElement('span'));
     });
   }
-  static getColoringDOMElement() {
-    const spanElement = document.createElement('span');
-    // TODO: convert this into a config
-    spanElement.setAttribute('style', 'background:green;coloqr:white;');
+  getColoringDOMElement(elementType) {
+    const spanElement = DOM.createElement(elementType);
+    DOM.changeElementStyle(spanElement, defaultNoteStyle);
+    this.getText();
+    DOM.addEvent(spanElement,
+                 'mouseenter',
+                 event => this.follower.onMoseOver(event, spanElement.getClientRects()), false);
+    DOM.addEvent(spanElement,
+                 'mouseleave',
+                 event => this.follower.onMouseLeave(event, spanElement.getClientRects()), false);
     return spanElement;
   }
 }
 
 export default Note;
+

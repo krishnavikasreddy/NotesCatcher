@@ -1,10 +1,11 @@
 // config for notes styling
 
 const defaultNoteStyle = {
-  foreground: 'red',
-  background: 'white',
+  background: 'green',
+  color: 'white',
 };
 
-export default {
-  defaultNoteStyle,
-};
+
+export default
+defaultNoteStyle;
+

@@ -1,32 +1,36 @@
 {
-    "name": "catch_my_notes",
-    "version": "1.0.0",
-    "description": "Catch your notes on the go",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "webpack-dev-server --hot --progress --colors --inline"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+ssh://git@github.com/krishnavikasreddy/catchMyNotes.git"
-    },
-    "author": "Krishna Vikas Minnamareddy",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/krishnavikasreddy/catchMyNotes/issues"
-    },
-    "dependencies": {
-        "babel-core": "^6.23.1",
-        "babel-loader": "^6.3.2",
-        "babel-preset-es2015": "^6.22.0",
-        "eslint": "^3.15.0",
-        "eslint-loader": "latest",  
-        "eslint-plugin-jsx-a11y": "^3.0.2 || ^4.0.0",
-        "eslint-plugin-import": "^2.2.0",
-        "eslint-config-airbnb": "latest",
-        "webpack": "latest",
-        "webpack-dev-server": "latest"
-    },
-    "homepage": "https://github.com/krishnavikasreddy/catchMyNotes#readme"
+  "name": "catch_my_notes",
+  "version": "1.0.0",
+  "description": "Catch your notes on the go",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --hot --progress --colors --inline"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/krishnavikasreddy/catchMyNotes.git"
+  },
+  "author": "Krishna Vikas Minnamareddy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/krishnavikasreddy/catchMyNotes/issues"
+  },
+  "dependencies": {
+    "babel-core": "latest",
+    "babel-loader": "latest",
+    "babel-preset-es2015": "latest",
+    "babel-preset-stage-2":"latest",
+    "babel-polyfill":"latest",
+    "eslint": "latest",
+    "eslint-loader": "latest",
+    "eslint-plugin-jsx-a11y": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-react": "latest",
+    "eslint-config-airbnb": "latest",
+    "tippy.js": "latest",
+    "webpack": "latest",
+    "webpack-dev-server": "latest"
+  },
+  "homepage": "https://github.com/krishnavikasreddy/catchMyNotes#readme"
 }

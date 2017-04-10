@@ -8,8 +8,10 @@
 
 * CATCHMYNOTES
 ** DONE Selection Using Mouse
-** TODO check If the selection has any previous selection
+** DONE check If the selection has any previous selection
   DEADLINE: <2017-03-20 Mon>
+** TODO delete the selection
+   DEADLINE: <2017-03-19 Sun>
 ** TODO Copy to clipboard
   DEADLINE: <2017-03-21 Tue>
 ** TODO React-Redux based App development

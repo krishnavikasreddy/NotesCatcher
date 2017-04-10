@@ -1,8 +1,10 @@
 import Note from './Note';
+import NotesFollower from './NoteFollower';
 
 export default class NotesContainer {
   constructor() {
     this.Notes = [];
+    this.notesFollower = new NotesFollower();
   }
 
   static onTextSelectStart() {
@@ -24,9 +26,9 @@ export default class NotesContainer {
       // In this case we need to know if any one of them is failing
       // so reverse the boolean
       return !(startToStart === startToEnd
-              && endToStart === endToEnd
-              && startToStart === endToStart
-                  && startToEnd === endToEnd);
+               && endToStart === endToEnd
+               && startToStart === endToStart
+               && startToEnd === endToEnd);
     };
     if (this.Notes.length > 0) {
       return !this.Notes.some(collision);
@@ -66,7 +68,7 @@ export default class NotesContainer {
             focusNode,
             anchorOffset,
             focusOffset } = selection;
-    const note = new Note(selection);
+    const note = new Note(this.notesFollower, selection);
     const isSelectionBackward = NotesContainer.isSelectionBackward(selection);
     selectedNodes.forEach((node) => {
       const range = document.createRange();
@@ -106,7 +108,7 @@ export default class NotesContainer {
   onTextSelectEnd(selection) {
     if (this.doesSelectionCollides(selection)) {
       this.assignRangesToSelectedNodes(
-      this.constructor.extractAllSelectedNodes(selection), selection);
+        this.constructor.extractAllSelectedNodes(selection), selection);
     }
   }
   static isSelectionBackward(selection) {
