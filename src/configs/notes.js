@@ -5,7 +5,16 @@ const defaultNoteStyle = {
   color: 'white',
 };
 
+const defaultFollowerStyle = {
+  position: 'absolute',
+  top: '0px',
+  left: '0px',
+  color: 'red',
+  background: 'black',
+  visibility: 'hidden',
+};
 
-export default
-defaultNoteStyle;
-
+export {
+  defaultNoteStyle,
+  defaultFollowerStyle,
+};

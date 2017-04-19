@@ -1,6 +1,6 @@
 // Note - each note in a webpage
-import defaultNoteStyle from './configs/notes';
-import * as DOM from './utils/DOMUtils';
+import { defaultNoteStyle } from 'configs/notes';
+import * as DOM from 'utils/DOMUtils';
 
 class Note {
   constructor(follower, selection) {
@@ -37,7 +37,6 @@ class Note {
     return range;
   }
   static changeStyle(element, style) {
-    // TODO : Test this in IE, for I doubt if polyfill supports this
     Object.assign(element.style, style);
   }
   addRange(noteRange) {
@@ -66,4 +65,3 @@ class Note {
 }
 
 export default Note;
-

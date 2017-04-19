@@ -1,34 +1,35 @@
 var path = require("path");
 
 var config = {
-  entry: ["babel-polyfill", path.join(__dirname,"src/index.js")],
+  entry: [path.join(__dirname,"src/index.js")],
   output: {
     path: path.join(__dirname,"build"),
     publicPath: "/build/",
     filename: 'bundle.js'
   },
   resolve: {
-    extensions: ['.js']
+    extensions: [".js"],
+    modules: [path.resolve(__dirname, "src"), "node_modules"]
   },
   devServer: {
     inline: true,
     port: 8080,
   },
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'stage-2']
-        }
+        enforce: 'pre',
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        include: /src/,
+        loader: 'eslint-loader'
       },
       {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
-      }
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        include: /src/,
+        loader: 'babel-loader'
+      },
     ]
   }
 }

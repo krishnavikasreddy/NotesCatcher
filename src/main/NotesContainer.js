@@ -1,5 +1,5 @@
-import Note from './Note';
-import NotesFollower from './NoteFollower';
+import Note from 'main/Note';
+import NotesFollower from 'main/NoteFollower';
 
 export default class NotesContainer {
   constructor() {

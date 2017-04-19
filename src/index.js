@@ -1,4 +1,4 @@
-import NotesContainer from './NotesContainer';
+import NotesContainer from 'main/NotesContainer';
 
 // TODO: this should be imported from config file
 const MIN_SELCTION_SIZE = 3;
