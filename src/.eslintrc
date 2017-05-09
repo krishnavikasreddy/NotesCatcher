@@ -6,4 +6,5 @@
   settings: {
     'import/resolver': 'webpack',
   },
+  "parser": "babel-eslint",
 }

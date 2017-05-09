@@ -8,7 +8,7 @@ var config = {
     filename: 'bundle.js'
   },
   resolve: {
-    extensions: [".js"],
+    extensions: [".js",".jsx"],
     modules: [path.resolve(__dirname, "src"), "node_modules"]
   },
   devServer: {
@@ -19,16 +19,21 @@ var config = {
     rules: [
       {
         enforce: 'pre',
-        test: /\.js$/,
+        test: /\.jsx?/,
         exclude: /(node_modules)/,
         include: /src/,
         loader: 'eslint-loader'
       },
       {
-        test: /\.js$/,
+        test: /\.jsx?/,
         exclude: /(node_modules)/,
         include: /src/,
-        loader: 'babel-loader'
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["es2015","stage-2","react"]
+          }
+        }
       },
     ]
   }

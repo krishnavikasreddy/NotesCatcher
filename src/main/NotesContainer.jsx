@@ -1,15 +1,31 @@
 import Note from 'main/Note';
 import NotesFollower from 'main/NoteFollower';
 
+import React from 'react';
+import ReactDom from 'react-dom';
+
+const entryElement = () => {
+  const element = document.createElement('div');
+  element.setAttribute('id', 'note-catcher');
+  document.getElementsByTagName('body')[0].appendChild(element);
+};
+
 export default class NotesContainer {
   constructor() {
     this.Notes = [];
-    this.notesFollower = new NotesFollower();
+    entryElement();
+    this.notesFollower =
+      ReactDom.render(
+        <NotesFollower
+          onNoteRemove={this.noteRemove}
+        />,
+        document.getElementById('note-catcher'));
   }
 
   static onTextSelectStart() {
     // Should Some thing come up
   }
+
   doesSelectionCollides(selection) {
     const givenRange = selection.getRangeAt(0);
     const collision = (note) => {
@@ -68,7 +84,9 @@ export default class NotesContainer {
             focusNode,
             anchorOffset,
             focusOffset } = selection;
-    const note = new Note(this.notesFollower, selection);
+    const note = new Note(this.Notes.length,
+                          this.notesFollower,
+                          selection);
     const isSelectionBackward = NotesContainer.isSelectionBackward(selection);
     selectedNodes.forEach((node) => {
       const range = document.createRange();
@@ -105,12 +123,18 @@ export default class NotesContainer {
     note.colorRanges();
     this.Notes.push(note);
   }
+
   onTextSelectEnd(selection) {
     if (this.doesSelectionCollides(selection)) {
       this.assignRangesToSelectedNodes(
         this.constructor.extractAllSelectedNodes(selection), selection);
     }
   }
+
+  removeNote = (noteId) => {
+    delete this.Notes[noteId];
+  }
+
   static isSelectionBackward(selection) {
     const comparedPosition = selection.anchorNode
           .compareDocumentPosition(selection.focusNode);
