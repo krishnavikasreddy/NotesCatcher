@@ -17,7 +17,7 @@ export default class NotesContainer {
     this.notesFollower =
       ReactDom.render(
         <NotesFollower
-          onNoteRemove={this.noteRemove}
+          onNoteRemove={this.removeNote}
         />,
         document.getElementById('note-catcher'));
   }

@@ -10,7 +10,8 @@ const defaultFollowerStyle = {
   top: '0px',
   left: '0px',
   color: 'red',
-  background: 'black',
+  background: '#fff',
+  border: '1px solid #000',
   visibility: 'hidden',
 };
 

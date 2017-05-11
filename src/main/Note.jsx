@@ -88,9 +88,10 @@ class Note {
 
   unColorRanges() {
     this.textRanges.forEach((range) => {
-      const textNode = range.extractContents().childNode.childNode;
+      const textNode = range.extractContents().childNodes[0].childNodes[0];
       range.insertNode(textNode);
     });
+    this.noteFollower.setStyle({ top: 0, left: 0, visibility: 'hidden' });
   }
 
   changeColor = (color) => {

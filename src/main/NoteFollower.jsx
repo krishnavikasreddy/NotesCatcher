@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Follower from 'main/Follower';
 
@@ -48,15 +51,22 @@ class NotesFollower extends Component {
 
   render() {
     return (
-      <Follower
-        hide={this.state.hide}
-        style={this.state.style}
-        onMouseEnter={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}
-        currentNote={this.state.currentNote}
-      />
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
+        <Follower
+          hide={this.state.hide}
+          style={this.state.style}
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave={this.onMouseLeave}
+          currentNote={this.state.currentNote}
+          onNoteRemove={this.props.onNoteRemove}
+        />
+      </MuiThemeProvider>
     );
   }
 }
+
+NotesFollower.propTypes = {
+  onNoteRemove: PropTypes.func.isRequired,
+};
 
 export default NotesFollower;

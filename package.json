@@ -23,6 +23,7 @@
     "babel-preset-stage-2": "latest",
     "babel-preset-react": "latest",
     "babel-polyfill": "latest",
+    "material-ui": "latest",
     "react": "latest",
     "react-dom": "latest",
     "prop-types": "latest",
