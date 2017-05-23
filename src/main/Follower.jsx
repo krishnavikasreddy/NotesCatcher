@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { defaultFollowerStyle } from 'configs/notes';
 import ColorChanger from 'follower/ColorChanger';
 import DeleteNote from 'follower/DeleteNote';
+import AddComment from 'follower/AddComment';
 
 class Follower extends Component {
   constructor(props) {
@@ -27,6 +28,10 @@ class Follower extends Component {
     this.setState({ visibility: { visibility: 'hidden' } });
   }
 
+  onAddNote = () => {
+    this.props.showCommentModal();
+  }
+
   render() {
     return (
       <div
@@ -45,6 +50,9 @@ class Follower extends Component {
         <DeleteNote
           onClick={this.onNoteDelete}
         />
+        <AddComment
+          onClick={this.onAddNote}
+        />
       </div>
     );
   }
@@ -57,6 +65,7 @@ Follower.propTypes = {
   style: PropTypes.object, // eslint-disable-line
   currentNote: PropTypes.object, // eslint-disable-line
   onNoteRemove: PropTypes.func.isRequired,
+  showCommentModal: PropTypes.func.isRequired,
 };
 
 Follower.defaultProps = {

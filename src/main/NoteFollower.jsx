@@ -4,6 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Follower from 'main/Follower';
+import CommentModal from 'follower/comment/CommentModal';
 
 class NotesFollower extends Component {
   constructor(props) {
@@ -14,16 +15,31 @@ class NotesFollower extends Component {
       cursorIn: false,
       currentNoteMouseLeave: () => {},
       currentNote: {},
+      showCommentModal: true,
     };
   }
 
-  onMouseEnter = () => {
-    this.setState({ cursorIn: true });
+  onMouseEnter = (event) => {
+    this.setState({
+      cursorIn: true,
+      top: event.clientY,
+      left: event.clientX,
+    });
   }
 
   onMouseLeave = () => {
     this.setState({ cursorIn: false });
     this.state.currentNoteMouseLeave();
+  }
+
+  onCommentSubmit = (text) => {
+    console.log(text);
+  }
+
+  onCommentCancel = () => {
+    this.setState({
+      showCommentModal: false,
+    });
   }
 
   setStyle = (style) => {
@@ -49,17 +65,33 @@ class NotesFollower extends Component {
     this.setState({ hide: false });
   }
 
+  showCommentModal = () => {
+    this.setState({
+      showCommentModal: true,
+    });
+  }
+
   render() {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme()}>
-        <Follower
-          hide={this.state.hide}
-          style={this.state.style}
-          onMouseEnter={this.onMouseEnter}
-          onMouseLeave={this.onMouseLeave}
-          currentNote={this.state.currentNote}
-          onNoteRemove={this.props.onNoteRemove}
-        />
+        <div >
+          <Follower
+            hide={this.state.hide}
+            style={this.state.style}
+            onMouseEnter={this.onMouseEnter}
+            onMouseLeave={this.onMouseLeave}
+            currentNote={this.state.currentNote}
+            onNoteRemove={this.props.onNoteRemove}
+            showCommentModal={this.showCommentModal}
+          />
+          <CommentModal
+            show={this.state.showCommentModal}
+            onSave={this.onCommentSubmit}
+            onCancel={this.onCommentCancel}
+            top={this.state.top}
+            left={this.state.left}
+          />
+        </div>
       </MuiThemeProvider>
     );
   }

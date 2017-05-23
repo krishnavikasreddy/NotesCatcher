@@ -24,11 +24,13 @@
     "babel-preset-react": "latest",
     "babel-polyfill": "latest",
     "material-ui": "latest",
+    "material-ui-icons": "latest",
     "react": "latest",
     "react-dom": "latest",
     "prop-types": "latest",
     "webpack": "latest",
-    "webpack-dev-server": "latest"
+    "webpack-dev-server": "latest",
+    "file-loader": "latest"
   },
   "homepage": "https://github.com/krishnavikasreddy/catchMyNotes#readme",
   "devDependencies": {
